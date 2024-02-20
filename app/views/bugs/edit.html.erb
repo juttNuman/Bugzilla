@@ -1,0 +1,22 @@
+<h1>Edit <%= @bug.title %> Bug</h1>
+
+<%= form_with(model: [@project, @bug], local: true) do |form| %>
+
+<%= form.hidden_field :project_id, value: @project.id %>
+<p>
+<% bug_status=['newly','started','completed','resolved']%>
+<%= form.label :status %>
+<%= form.select(:status, bug_status,{}, :required=>true)%>
+</p>
+
+<p>
+    <%= form.submit %>
+</p>
+<% end %>
+
+
+
+
+
+
+

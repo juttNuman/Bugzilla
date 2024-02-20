@@ -1,0 +1,42 @@
+<%if !current_user.developer?%>
+<h1>All Bugs</h1>
+<%else%>
+<h1>Bugs Of Projects you are working in</h1>
+<p>you can pick any bug which is not assigned to any developer</p>
+<%end%>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Category</th>
+    <th>Status</th>
+    <th>User</th>
+    <th>Created By</th>
+    <th>Deadline</th>
+    <th>Actions</th>
+  </tr>
+  <% @bugs.each do |bug| %>
+    <tr>
+      <td><%= bug.id %></td>
+      <td><%= bug.title %></td>
+      <td><%= bug.category %></td>
+      <td><%= bug.status %></td>
+      <td>
+        <% if bug.user %>
+          <%= bug.user.name %>
+        <% else %>
+          No user assigned
+        <% end %>
+      </td>
+      <td><%= bug.created_by %></td>
+      <td><%= bug.deadline %></td>
+      <td>
+        <% if bug.user_id.nil? %>
+        <%= button_to 'Assign To Yourself', "assign/#{bug.id}", method: :post%>
+
+
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

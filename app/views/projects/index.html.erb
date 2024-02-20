@@ -1,0 +1,14 @@
+<h1>All Projects</h1>
+
+<ul>
+  <% @projects.each do |project| %>
+    <li>
+      <%= link_to project.name, project%>
+    </li>
+  <% end %>
+</ul> 
+<% if current_user.manager? %>
+  <%= link_to 'New Project', new_project_path %>
+<%end%>
+
+
