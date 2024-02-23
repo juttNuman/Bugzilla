@@ -5,10 +5,16 @@ class BugsController < ApplicationController
   
     
     def index
-      
+      if current_user.developer?
         @projects = current_user.projects
         @bugs = Bug.where(project_id: @projects.pluck(:id))
+      else 
+        # @bugs=Bug.all
+        @q = Bug.ransack(params[:q])
+        @bugs = @q.result
+      end
     end
+
 
     def new 
     end 
@@ -69,7 +75,7 @@ class BugsController < ApplicationController
     end
   
     private
-      # Use callbacks to share common setup or constraints between actions.
+  
       def set_project
         @project = Project.find(params[:project_id])
       end
@@ -78,7 +84,7 @@ class BugsController < ApplicationController
         @bug = @project.bugs.find(params[:id])
       end
   
-      # Only allow a trusted parameter "white list" through.
+
         private
 
         def bug_params

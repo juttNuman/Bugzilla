@@ -72,4 +72,5 @@ end
 gem 'devise'
 gem 'sidekiq'
 gem 'cancancan'
+gem 'ransack'
 

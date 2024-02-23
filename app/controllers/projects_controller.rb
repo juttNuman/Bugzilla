@@ -5,7 +5,8 @@ class ProjectsController < ApplicationController
       if current_user.developer?
         @projects = current_user.projects
       else
-        @projects = Project.all
+        @q = Project.ransack(params[:q])
+        @projects = @q.result
       end
     end
   
@@ -64,7 +65,7 @@ class ProjectsController < ApplicationController
     private
       def project_params
         # params.require(:project).permit(:name, :description)
-        params.require(:project).permit(:name, :description, collaborations_attributes: [:id, :user_id,:project_id, :_desrtroy])
+        params.require(:project).permit(:name, :description, collaborations_attributes: [:id, :user_id,:_desrtroy])
         
       end
   end

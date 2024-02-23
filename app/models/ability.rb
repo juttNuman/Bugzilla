@@ -19,8 +19,13 @@ class Ability
     can :create, Bug
     cannot :create, Collaboration
     cannot :destroy, Collaboration
+    can :read , Bug
    else
     can :read,Project
+    cannot :update, Project
+    cannot :destroy, Project
+    cannot :edit,Project
+    cannot :create,Bug
     can :edit,Bug
     can :read,Bug
     can :update,Bug

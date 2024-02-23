@@ -81,10 +81,8 @@
 
   <% if user_signed_in? %>
     <div class="navbar-dropdown">
-      <%if current_user.developer?%>
+      <%=link_to "All Projects ", projects_path%>
       <%=link_to "All Bugs ", bugs_path%>
-      <%end%>
-
       <%= current_user.roles %>
       <a href="#">Current User</a>
       <div class="dropdown-content">

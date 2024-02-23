@@ -4,8 +4,6 @@ class CollaborationsController < ApplicationController
     def create
       @project = Project.find(params[:project_id])
       user_id = collaboration_params[:user_id]
-  
-      # Check if the user is already assigned to the project
       if @project.collaborations.exists?(user_id: user_id)
         redirect_to @project, alert: 'User is already assigned to the project.'
         return

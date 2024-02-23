@@ -14,10 +14,7 @@ resources :projects do
 end
 
 resources :bugs
-
 post "/assign/:id" , to: "bugs#assign" 
-
-
 mount Sidekiq::Web => '/sidekiq'
 
 

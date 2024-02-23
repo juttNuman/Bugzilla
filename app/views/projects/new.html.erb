@@ -1,29 +1,41 @@
 <h1>New Project</h1>
-<%= form_with(model: @project, local: true) do |form| %>
+<%= form_with model: @project, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f| %>
+ 
   <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </div>
+  <%= f.label :name %><br>
+  <%= f.text_field :name %>
+  <% if @project.errors[:name].any? %>
+    <p><%= @project.errors[:name].first %></p>
+  <% end %>
+</div>
 
   <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
   </div>
 
-  <div>
-    Collaborations:
-    <%= form.fields_for :collaborations do |collaboration_fields| %>
-      <h2>Assign Users:</h2>
-      <%= collaboration_fields.collection_radio_buttons :user_id, User.where(roles:["qa","developer"]), :id, :name, include_hidden: false do |b| %>
-         <%= b.label { b.radio_button + b.text } %><br>
-      <% end %>
-      <% collaboration_fields.hidden_field :project_id, value: @project.id %>
+
+  <template data-nested-form-target="template">
+    <%= f.fields_for :collaborations, Collaboration.new, child_index: 'NEW_RECORD' do |collaboration_fields| %>
+    <%= render "projects/project_collaboration_form", f: collaboration_fields %>
     <% end %>
-  </div>
+  </template>
+
+  
+  
+    <div data-nested-form-target="target"></div>
+  <button type="button" data-action="nested-form#add">Add User</button>
 
   <div>
-    <%= form.submit %> 
+    <br>
+    <br>
+    <%= f.submit %> 
   </div>
+  
 <% end %>
 
 <%= link_to 'Back', projects_path %>
+
+
+
+<%# bin/importmap pin stimulus-nested-form %>

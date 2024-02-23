@@ -1,5 +1,15 @@
-<h1>All Projects</h1>
+<%if !current_user.developer? %>
+ <%= search_form_for @q do |f| %>
+  
+    <%= f.label :name_cont, "Project" %>
+    <%= f.text_field :name_cont %>
+    <%= f.submit "Search" %>
+ <% end %>
+<%end%>
 
+
+
+<h1>All Projects</h1>
 <ul>
   <% @projects.each do |project| %>
     <li>

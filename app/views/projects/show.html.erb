@@ -1,6 +1,5 @@
 <h5><%= link_to 'Back', projects_path %></h5>
 
-
 <h1><%= @project.name %></h1>
 <p><%= @project.description %></p>
 <% if current_user.id == @project.creator_id %>
@@ -28,7 +27,7 @@
 <% if @project.creator_id == current_user.id %>
 <h2>Add New User to Project:</h2>
 <%= form_with(model: [@project, Collaboration.new], local: true) do |form| %>
-  <div class="field">
+  <div>
     <%= form.label :user_id, "Select User" %><br>
     <%= form.collection_select :user_id, User.where(roles:["qa","developer"]), :id, :name, prompt: "Select User" %>
   </div>
@@ -110,15 +109,54 @@
     <%= form.text_field :title%>
   </p>
 
-  <p>
-    <%= form.label :category %>
-    <%= form.select :category, Bug.categories.keys.map { |category| [category.titleize, category] } %>
-  </p>
- 
-   <p>
-    <%= form.label :status %>
-    <%= form.select :status, Bug.statuses.keys.map { |status| [status.titleize, status] } %>
-  </p>
+  <%= label :category , 'Choose type :' %>
+<div>
+  <%= label :category , 'Bug:' %>
+  <%= form.radio_button :category, 'bug', id: 'category_bug' %>
+  <br>
+  <%= label :category , 'Feature:' %>
+  <%= form.radio_button :category, 'feature', id: 'category_feature' %>
+  <br>
+
+  <% bug_status=['newly' ,'started' , 'completed', 'resolved' ]%>
+  <%= form.label :status %>
+  <%= form.select(:status, bug_status,{}, :required=>true, id: 'Bugz_status') %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const categoryBug = document.querySelector('#category_bug');
+    const categoryFeature = document.querySelector('#category_feature');
+    const statusSelect = document.querySelector('#Bugz_status');
+
+    const bugStatus = ['newly', 'started', 'resolved'];
+    const featureStatus = ['newly', 'started', 'completed'];
+
+    categoryBug.addEventListener('change', function() {
+      if (categoryBug.checked) {
+        updateStatusOptions(bugStatus);
+      }
+    });
+
+    categoryFeature.addEventListener('change', function() {
+      if (categoryFeature.checked) {
+        updateStatusOptions(featureStatus);
+      }
+    });
+
+    function updateStatusOptions(statusOptions) {
+      statusSelect.innerHTML = ''; 
+
+      statusOptions.forEach(function(option) {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option.charAt(0).toUpperCase() + option.slice(1); 
+        statusSelect.appendChild(optionElement);
+      });
+    }
+  });
+</script>
+
   <p>
     <%= form.label :deadline %>
     <%= form.date_field :deadline %>

@@ -5,5 +5,9 @@ class Bug < ApplicationRecord
 
   enum category: {feature: 0, bug: 1}
   enum status: { newly: 0, started: 1, completed: 2, resolved: 3 }
+
+  def self.ransackable_attributes(_auth_object = nil)
+    "%w(title)" "%w(status)"
+  end
   
 end
