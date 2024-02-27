@@ -1,4 +1,5 @@
 class Bug < ApplicationRecord
+  has_one_attached :avatar
   validates :title, presence: true, uniqueness: { scope: :project_id }
   belongs_to :user, optional: true
   belongs_to :project

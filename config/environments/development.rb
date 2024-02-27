@@ -73,7 +73,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   
-
+  config.active_storage.variant_processor = :mini_magick;
   config.active_job.queue_adapter = :sidekiq
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_controller.raise_on_missing_callback_actions = true

@@ -31,6 +31,7 @@
     <th>Created By</th>
     <th>Deadline</th>
     <th>Actions</th>
+    <th>Avatar</th>
   </tr>
 
   <% @bugs.each do |bug| %>
@@ -51,8 +52,14 @@
       <td>
         <% if bug.user_id.nil? %>
         <%= button_to 'Assign To Yourself', "assign/#{bug.id}", method: :post%>
-
         <%end%>
+      </td>
+      <td>
+        <td>
+          <% if bug.avatar.attached? %>
+         <%= image_tag bug.avatar,  size: "100x100" %>
+         <%end%>
+         </td>
       </td>
     </tr>
   <% end %>

@@ -35,6 +35,8 @@
     <th>Created By</th>
     <th>Deadline</th>
     <th>Edit</th> 
+    <th>avatar</th>
+    
   </tr>
   <% if current_user.developer? %>
     <% @project.bugs.where(user_id: current_user.id).each do |bug| %>
@@ -78,10 +80,20 @@
         <td>
           <%= link_to 'Edit', edit_project_bug_path(@project, bug) %>
         </td>
+        <td>
+          <% if bug.avatar.attached? %>
+         <%= image_tag bug.avatar, class: "avatar", size: "100x100" %>
+
+         <%end%>
+         </td>
+        
+        
       </tr>
     <% end %>
   <% end %>
 </table>
+
+
 
 
 <% if !current_user.developer? %>
@@ -150,6 +162,16 @@
   <%= form.collection_select :user_id, User.where(roles:"developer"), :id, :name, prompt: "Select User" %>
 </p>
  <%= form.hidden_field :project_id, value: @project.id %>
+  
+  
+ <div>
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar %> <%# This is the avatar. i.e. single image uplaod %>
+  </div>
+  
+  
+  
+  
   <p>
     <%= form.submit %>
   </p>
