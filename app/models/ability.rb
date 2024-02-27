@@ -12,6 +12,7 @@ class Ability
     can :create, Collaboration
     can :destroy, Collaboration
     can :create, Bug
+    can :read , Bug
    elsif user.qa?
     can :read, Project
     cannot :update, Project
@@ -26,7 +27,7 @@ class Ability
     cannot :destroy, Project
     cannot :edit,Project
     cannot :create,Bug
-    can :edit,Bug
+    can :edit_status, Bug, id: user.bugs.pluck(:id)
     can :read,Bug
     can :update,Bug
     can :assign ,Bug

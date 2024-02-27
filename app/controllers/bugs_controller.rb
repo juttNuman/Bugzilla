@@ -68,7 +68,7 @@ class BugsController < ApplicationController
       redirect_to bugs_path, notice: 'Bug was successfully assigned to yourself.'
     end
     
-  # DELETE /projects/:project_id/bugs/:id
+
     def destroy
       @bug.destroy
       redirect_to project_bugs_path(@project), notice: 'Bug was successfully destroyed.'

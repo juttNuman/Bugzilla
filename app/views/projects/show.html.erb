@@ -24,23 +24,6 @@
   <% end %>
 </ul>
 
-<% if @project.creator_id == current_user.id %>
-<h2>Add New User to Project:</h2>
-<%= form_with(model: [@project, Collaboration.new], local: true) do |form| %>
-  <div>
-    <%= form.label :user_id, "Select User" %><br>
-    <%= form.collection_select :user_id, User.where(roles:["qa","developer"]), :id, :name, prompt: "Select User" %>
-  </div>
-  <div >
-    <%= form.submit "Add User" %>
-  </div>
-<% end %>
-<%end%>
-
-
-
-
-
 <h1>Already Designed Bugs</h1>
 <table>
   <tr>
@@ -69,7 +52,7 @@
         </td>
         <td><%= bug.created_by %></td>
         <td><%= bug.deadline %></td>
-        <!-- Edit link column -->
+      
         <td>
           <%= link_to 'Edit', edit_project_bug_path(@project, bug) %>
         </td>
@@ -124,7 +107,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('turbo:load', function() {
     const categoryBug = document.querySelector('#category_bug');
     const categoryFeature = document.querySelector('#category_feature');
     const statusSelect = document.querySelector('#Bugz_status');
@@ -156,6 +139,7 @@
     }
   });
 </script>
+
 
   <p>
     <%= form.label :deadline %>
